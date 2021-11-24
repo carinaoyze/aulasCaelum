@@ -1,0 +1,40 @@
+<meta charset="utf-8" />
+<h1>AJAX com Fetch API</h1>
+
+<button id="btnCarregar">
+    Carregar
+</button>
+<button onclick="alert('Testando efeito do ajax sincrono')">
+    Teste
+</button>
+
+<div class="conteudoCarregado">
+    Os dados carregados serão mostrados aqui...
+</div>
+
+<script>
+
+    const btnCarregar = document.querySelector('#btnCarregar');
+    const divConteudo = document.querySelector('.conteudoCarregado');
+
+    btnCarregar.addEventListener('click', function() {
+        btnCarregar.disabled = true;
+        btnCarregar.textContent = 'Carregando...';
+
+        fetch('https://jhonatanjacinto.dev/teste.php').then(function(resposta) {
+            return resposta.text();
+        })
+        .then(function(textoCarregado) {
+            divConteudo.innerHTML = textoCarregado;
+        })
+        .catch(function(erro) {
+            alert('Deu ruim no carregamento das informações!');
+            console.error(erro);
+        })
+        .finally(function() {
+            btnCarregar.textContent = 'Carregar';
+            btnCarregar.disabled = false;
+        });
+    });
+
+</script>
